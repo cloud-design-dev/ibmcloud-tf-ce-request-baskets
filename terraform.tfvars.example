@@ -1,0 +1,14 @@
+# IBM Cloud API key
+ibmcloud_api_key        = ""
+
+# Region for Code Engine project
+region                  = ""
+
+# Name of an existing resource group
+existing_resource_group = ""
+
+# Name of the Code Engine project owner. Used as a tag on resources
+owner                   = ""
+
+# Name of an existing database. If empty, a new database will be created
+existing_database       = ""
