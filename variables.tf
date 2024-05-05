@@ -3,13 +3,13 @@ variable "ibmcloud_api_key" {
   type        = string
 }
 
-variable "region" {
+variable "ibmcloud_region" {
   description = "The region where the Code Engine project will be created."
   type        = string
   default     = "us-south"
 }
 
-variable "owner" {
+variable "project_owner" {
   description = "The owner of the resources. This will be set as a tag on supported resources."
   type        = string
 }
@@ -19,7 +19,8 @@ variable "existing_resource_group" {
   type        = string
 }
 
-variable "existing_database" {
-  description = "The name of an existing database to use for the resources. If not provided, a new database will be created."
+variable "existing_postgres_instance" {
+  description = "The name of an existing Postgres database instance to use for the app. If not provided, a new database will be created."
   type        = string
 }
+

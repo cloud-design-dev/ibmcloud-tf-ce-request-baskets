@@ -1,6 +1,3 @@
-
-
-
 module "resource_group" {
   source                       = "terraform-ibm-modules/resource-group/ibm"
   version                      = "1.1.5"
@@ -25,12 +22,12 @@ resource "random_string" "rb_master_token" {
 }
 
 resource "ibm_database" "postgresql_db" {
-  count             = var.existing_database == "" ? 1 : 0
+  count             = var.existing_postgres_instance == "" ? 1 : 0
   resource_group_id = module.resource_group.resource_group_id
-  name              = "${local.prefix}-postgres"
+  name              = "pgsql-${local.prefix}-instance"
   service           = "databases-for-postgresql"
   plan              = "standard"
-  location          = var.region
+  location          = var.ibmcloud_region
   adminpassword     = random_string.admin_password.result
 
   group {
@@ -72,7 +69,8 @@ resource "ibm_code_engine_secret" "db_credentials" {
   format     = "generic"
 
   data = {
-    CONN = "postgres://${local.database_user}:${local.database_password}@${local.database_host}:${local.database_port}/ibmclouddb?sslmode=require"
+    CONN  = "postgres://${local.database_user}:${local.database_password}@${local.database_host}:${local.database_port}/ibmclouddb?sslmode=require"
+    TOKEN = random_string.rb_master_token.result
   }
 }
 

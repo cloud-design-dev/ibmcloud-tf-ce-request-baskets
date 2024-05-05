@@ -1,14 +1,15 @@
 # IBM Cloud API key
 ibmcloud_api_key        = ""
 
-# Region for Code Engine project
-region                  = ""
+# Region for Code Engine project. If you have an existing Postgres instance, use the same region where the DB resides. 
+ibmcloud_region                  = "us-south"
 
 # Name of an existing resource group
 existing_resource_group = ""
 
 # Name of the Code Engine project owner. Used as a tag on resources
-owner                   = ""
+project_owner                   = ""
 
-# Name of an existing database. If empty, a new database will be created
-existing_database       = ""
+# Name of an existing database. Use the DB region for the `ibmcloud_region` variable above. If empty, a new database will be created in `ibmcloud_region`
+existing_postgres_instance       = ""
+
