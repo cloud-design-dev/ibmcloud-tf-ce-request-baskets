@@ -2,6 +2,8 @@
 
 Terraform code to deploy an instance of the request-baskets app on IBM Cloud Code Engine with Postgres for persistent storage.
 
+![](./ce-rb-diagram.png)
+
 ## Prerequisites
 
 - Terrafom installed on your machine
