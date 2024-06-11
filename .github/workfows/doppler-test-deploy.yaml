@@ -1,0 +1,41 @@
+name: doppler-integration-test
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  plan-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.5
+        
+      - name: Install CLI
+        uses: dopplerhq/cli-action@v3
+      
+      - name: Do something with the CLI
+        run: |
+          doppler setup --project tf-vpc-demo --config dev
+          doppler run -- printenv
+
+        env:
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+
+      - name: HashiCorp - Setup Terraform
+        uses: hashicorp/setup-terraform@v2.0.3
+        with:
+          terraform_version: 1.6.6
+
+      - name: initialize and plan terraform 
+        run: |
+          terraform init 
+          terraform validate -var "ibmcloud_api_key=${{secrets.IBMCLOUD_API_KEY}}" -var "existing_resource_group=${{vars.RESOURCE_GROUP}}" -var "project_owner=ryantiffany"
+          terraform plan -var "ibmcloud_api_key=${{secrets.IBMCLOUD_API_KEY}}" -var "existing_resource_group=${{vars.RESOURCE_GROUP}}" -var "project_owner=ryantiffany"
